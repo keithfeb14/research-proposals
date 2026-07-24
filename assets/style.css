@@ -188,7 +188,7 @@ footer.page-footer a { color: var(--accent); }
 
 @media print {
   .back-link, footer.page-footer { display: none; }
-  .pipeline { break-inside: avoid; page-break-inside: avoid; }
+  .pipeline { break-inside: avoid; page-break-inside: avoid; overflow-x: visible; }
   .abstract, .equation { break-inside: avoid; page-break-inside: avoid; }
   h2, h3 { break-after: avoid-page; }
   body { background: #fff; }
