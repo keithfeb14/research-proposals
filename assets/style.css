@@ -96,21 +96,22 @@ li { margin-bottom: 0.5rem; }
 
 .pipeline {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
+  flex-wrap: nowrap;
+  gap: 0.6rem;
   align-items: stretch;
   margin: 1.5rem 0;
   overflow-x: auto;
+  padding-bottom: 0.25rem;
 }
 
 .pipeline .step {
-  flex: 1 1 140px;
-  min-width: 140px;
+  flex: 1 1 0;
+  min-width: 112px;
   background: var(--card-bg);
   border: 1px solid var(--rule);
   border-radius: 6px;
-  padding: 0.8rem 0.9rem;
-  font-size: 0.85rem;
+  padding: 0.7rem 0.6rem;
+  font-size: 0.76rem;
 }
 
 .pipeline .step strong {
@@ -121,9 +122,10 @@ li { margin-bottom: 0.5rem; }
 }
 
 .pipeline .arrow {
+  flex: 0 0 auto;
   align-self: center;
   color: var(--muted);
-  font-size: 1.1rem;
+  font-size: 1rem;
 }
 
 .equation {
