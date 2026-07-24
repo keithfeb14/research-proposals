@@ -181,3 +181,16 @@ footer.page-footer a { color: var(--accent); }
   text-decoration: none;
 }
 .back-link:hover { color: var(--accent); }
+
+@page {
+  margin: 18mm 16mm;
+}
+
+@media print {
+  .back-link, footer.page-footer { display: none; }
+  .pipeline { break-inside: avoid; page-break-inside: avoid; }
+  .abstract, .equation { break-inside: avoid; page-break-inside: avoid; }
+  h2, h3 { break-after: avoid-page; }
+  body { background: #fff; }
+  .page { padding: 0; max-width: 100%; }
+}
