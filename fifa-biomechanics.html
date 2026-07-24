@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Automating Risk: FIFA-Approved Skeletal Tracking — Research Proposal</title>
+<meta name="description" content="Research proposal: utilising FIFA-approved skeletal tracking data to identify biomechanical markers of fatigue and non-contact injury risk in elite football.">
+<link rel="stylesheet" href="assets/style.css">
+<script>
+  window.MathJax = { tex: { inlineMath: [['\\(', '\\)']], displayMath: [['$$', '$$']] } };
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+<div class="page">
+  <a class="back-link" href="index.html">&larr; Back to proposals</a>
+
+  <header class="title-block">
+    <h1>Automating Risk: Utilising FIFA-Approved Skeletal Tracking Data to Identify Biomechanical Markers of Fatigue and Non-Contact Injury Risk in Elite Football</h1>
+    <p class="byline">Keith Joseph Fernandes</p>
+    <p class="byline">Research Proposal &middot; in collaboration with the FIFA Innovation Department</p>
+  </header>
+
+  <div class="abstract">
+    <h3>Abstract</h3>
+    <p>This research project investigates the validation and application of FIFA-approved Semi-Automated Offside Technology (SAOT) skeletal tracking data for injury prevention in elite football. By comparing markerless pose estimation against gold-standard Vicon motion capture, the study aims to quantify the &ldquo;Validation Gap&rdquo; and identify &ldquo;Kinematic Decay&rdquo; signatures associated with fatigue. The final output will be an Explainable AI (XAI) dashboard designed to provide actionable injury-risk insights for elite coaching and medical staff.</p>
+  </div>
+
+  <section>
+    <h2>1. Introduction</h2>
+    <p>Athlete monitoring in football has traditionally relied on &ldquo;external load&rdquo; metrics via GPS<sup class="cite"><a href="#ref21">[21]</a></sup>. However, these metrics fail to capture the &ldquo;internal load&rdquo;&mdash;the physiological and biomechanical stress experienced by the athlete. The emergence of FIFA&rsquo;s Semi-Automated Off-Side Technology (SAOT) infrastructure, which captures 29 skeletal points at 50&nbsp;Hz for all players, provides a high-fidelity spatiotemporal record of match play<sup class="cite"><a href="#ref8">[8]</a></sup><sup class="cite"><a href="#ref9">[9]</a></sup>.</p>
+    <p>The primary challenge lies in the &ldquo;Validation Gap.&rdquo; Marker-based Vicon systems remain the &ldquo;Gold Standard&rdquo; for precision, while markerless video-based pose estimation is susceptible to occlusion and spatial uncertainty<sup class="cite"><a href="#ref5">[5]</a></sup><sup class="cite"><a href="#ref14">[14]</a></sup>. This research argues that forensic validation is required before SAOT data can be used for clinical injury prediction.</p>
+  </section>
+
+  <section>
+    <h2>2. Literature Review</h2>
+    <p>The identification of non-contact injury risk in football has traditionally relied on the Acute:Chronic Workload Ratio (ACWR), which compares a player&rsquo;s recent training volume to their long-term average<sup class="cite"><a href="#ref10">[10]</a></sup>. However, recent systematic reviews have highlighted the limitations of these locomotor-based models, noting that they fail to capture the biomechanical &ldquo;efficiency&rdquo; of movement<sup class="cite"><a href="#ref2">[2]</a></sup>. A player may maintain their high-speed running distance while simultaneously exhibiting signs of &ldquo;kinematic decay&rdquo;&mdash;subtle changes in joint alignment and movement patterns that precede structural failure<sup class="cite"><a href="#ref23">[23]</a></sup>.</p>
+
+    <h3>2.1 The Biomechanics of Non-Contact Injury and Fatigue</h3>
+    <p>Non-contact injuries, particularly to the Anterior Cruciate Ligament (ACL) and hamstring complex, are often the result of &ldquo;mechanical load&rdquo; exceeding the structural capacity of the musculoskeletal system<sup class="cite"><a href="#ref15">[15]</a></sup>. Fatigue, both physical and mental, is a primary driver of this imbalance. Studies have demonstrated that mental fatigue leads to a more upright landing posture, characterised by decreased knee and trunk flexion, which in turn increases the horizontal backward ground reaction force (GRF) and the valgus moment at the knee joint<sup class="cite"><a href="#ref23">[23]</a></sup>. Dynamic Knee Valgus (DKV)&mdash;the medial collapse of the knee during weight-bearing activities&mdash;is a well-established biomechanical marker for ACL strain<sup class="cite"><a href="#ref1">[1]</a></sup>.</p>
+
+    <h3>2.2 Predictive Biomechanical Markers Identified in Literature</h3>
+    <ul>
+      <li><strong>Trunk Lean:</strong> Lateral trunk displacement increases the abduction moment arm at the knee, exacerbating the risk of ligamentous injury<sup class="cite"><a href="#ref23">[23]</a></sup>.</li>
+      <li><strong>Hip Adduction:</strong> Fatigue reduces the capacity of the hip abductors to control femoral rotation, leading to excessive medial collapse during cutting manoeuvres<sup class="cite"><a href="#ref1">[1]</a></sup>.</li>
+      <li><strong>Knee Flexion Velocity:</strong> A reduction in the rate of knee flexion upon landing suggests a compromised energy dissipation strategy, shifting the load from the muscles to the passive joint structures<sup class="cite"><a href="#ref23">[23]</a></sup>.</li>
+    </ul>
+
+    <h3>2.3 The Validation Gap</h3>
+    <p>The fundamental problem lies in the &ldquo;Validation Gap.&rdquo; While markerless camera-based systems have shown promise in industrial ergonomic assessments (with errors ranging from 5&ndash;20&nbsp;mm), their performance in the chaotic environment of a football match remains unquantified<sup class="cite"><a href="#ref18">[18]</a></sup>.</p>
+    <p>The positional uncertainty in SAOT systems can be mathematically approximated using standard error propagation. For instance, at a standard 50&nbsp;Hz capture rate, a sprinting player moving at 8&nbsp;m/s travels 16&nbsp;cm between frames<sup class="cite"><a href="#ref20">[20]</a></sup>. Combining this with spatial resolution uncertainty (&Delta;x<sub>spatial</sub>) and calibration error (&Delta;x<sub>calibration</sub>), the total positional uncertainty (&Delta;x<sub>total</sub>) can reach approximately 34&nbsp;cm<sup class="cite"><a href="#ref14">[14]</a></sup>:</p>
+    <div class="equation">
+      \( \Delta x_{\text{total}} \approx \sqrt{\Delta x_{\text{temporal}}^2 + \Delta x_{\text{spatial}}^2 + \Delta x_{\text{calibration}}^2} \)
+    </div>
+    <div class="equation">
+      \( \Delta x_{\text{total}} \approx \sqrt{16^2 + 28^2 + 10^2} \approx 34\text{ cm} \)
+    </div>
+    <p>This magnitude of error is potentially significant when trying to calculate joint angles, where a few degrees of deviation in knee valgus can distinguish between a safe landing and an ACL-threatening event<sup class="cite"><a href="#ref11">[11]</a></sup>. Therefore, the research must first establish the accuracy limits of FIFA-approved skeletal tracking systems before they can be integrated into a reliable injury-prevention framework.</p>
+
+    <h3>2.4 Theoretical Framework: Kinematic Decay</h3>
+    <p>The concept of &ldquo;Kinematic Decay&rdquo; refers to the progressive loss of movement consistency as a player reaches a state of functional fatigue<sup class="cite"><a href="#ref3">[3]</a></sup>. Unlike heart rate or lactate levels, which measure physiological stress, kinematic decay measures the degradation of the motor control system<sup class="cite"><a href="#ref22">[22]</a></sup>. As muscles fatigue, their ability to generate force decreases, leading to altered movement patterns and impaired proprioception<sup class="cite"><a href="#ref17">[17]</a></sup>. In football, this often manifests as reduced coordination during &ldquo;kinematic sequencing&rdquo;&mdash;the transfer of force from the legs to the trunk and extremities during actions like passing or shooting<sup class="cite"><a href="#ref16">[16]</a></sup>. By identifying the point at which a player&rsquo;s kinematics deviate from their established baseline, coaches can make data-backed decisions regarding substitutions or training intensity adjustments.</p>
+  </section>
+
+  <section>
+    <h2>3. Aims and Objectives</h2>
+    <p>The aim of this research is to develop a validated application of skeletal tracking data for identifying fatigue and injury risk in elite football.</p>
+    <h3>3.1 Objectives</h3>
+    <ol>
+      <li>Compare kinematic descriptors (e.g., knee valgus, hip flexion) derived from SAOT systems against Vicon motion capture (MoCap) data to quantify Root Mean Square Error (RMSE).</li>
+      <li>Identify the &ldquo;Kinematic Decay&rdquo; signature, defined as statistically significant changes in skeletal markers as players approach fatigue.</li>
+      <li>Develop an Explainable AI (XAI) &ldquo;Risk Dashboard&rdquo; prototype to provide actionable insights for coaches and medical staff.</li>
+    </ol>
+    <p>The primary technical challenge associated with Objective 2 lies in computational efficiency and high-throughput data engineering. Processing 29 skeletal data points for 22 players at a frequency of 50&nbsp;Hz generates a large, high-dimensional dataset that must be parsed and modelled with minimal latency.</p>
+  </section>
+
+  <section>
+    <h2>4. Methodology</h2>
+    <p>This research adopts a three-phase approach:</p>
+
+    <h3>4.1 Phase 1: Laboratory Validation</h3>
+    <p>Research will be anchored in the state-of-the-art facilities of an accredited university sports science institute, featuring a world-leading 3D movement capture suite and a 3&nbsp;Tesla MRI scanner for detailed musculoskeletal assessment.</p>
+    <p>Elite players will perform football-specific drills (e.g., cutting, sprinting, landing), tracked simultaneously using a Vicon Vero motion capture system and a SAOT-mimicking camera array<sup class="cite"><a href="#ref7">[7]</a></sup>.</p>
+
+    <h3>4.2 Phase 2: Big Data and Anomaly Detection</h3>
+    <p>Using FIFA&trade; datasets, spatiotemporal Graph Neural Networks (GNNs) will be employed to encode player movements and capture spatial interactions between joints<sup class="cite"><a href="#ref6">[6]</a></sup>. DeepHit neural networks will be used to forecast &ldquo;time-to-injury,&rdquo; accounting for competing risks and individual baseline variability<sup class="cite"><a href="#ref4">[4]</a></sup>.</p>
+
+    <h3>4.3 Phase 3: Stakeholder Integration</h3>
+    <p>Qualitative interviews with professional stakeholders (n&nbsp;=&nbsp;14&ndash;20) will be conducted to evaluate the &ldquo;Risk Dashboard&rdquo; using the Technology Acceptance Model (TAM)<sup class="cite"><a href="#ref19">[19]</a></sup>. This phase ensures that visualisations are intuitive and effectively integrated into existing Risk Management Protocols (RMPs)<sup class="cite"><a href="#ref12">[12]</a></sup>.</p>
+  </section>
+
+  <section>
+    <h2>5. Potential Issues and Limitations</h2>
+    <p>The primary limitation of this research is the environmental variability inherent in stadium-based optical tracking compared to controlled laboratory settings. Factors such as player occlusion, varying lighting conditions, and jersey fit may introduce noise into the skeletal coordinates. Additionally, while Graph Neural Networks (GNNs) offer high predictive power, their computational demands require significant high-throughput data engineering to ensure minimal latency for real-time applications.</p>
+  </section>
+
+  <section>
+    <h2>6. Ethical and Governance Considerations</h2>
+    <p>This study will involve the processing of highly sensitive biomechanical data from elite professional athletes. Ethical approval will be sought through the host institution&rsquo;s University Research Ethics Committee (UREC). Data governance will adhere to GDPR and FIFA Data Protection Regulations, ensuring all skeletal data is de-identified and stored on encrypted, secure servers at the host institution. Informed consent will be obtained from all participants in Phase 1 and Phase 3.</p>
+  </section>
+
+  <section>
+    <h2>7. Proposed Timeline</h2>
+    <ul>
+      <li><strong>Months 1&ndash;6:</strong> Literature synthesis and UREC ethical approval.</li>
+      <li><strong>Months 7&ndash;18:</strong> Phase 1 Laboratory Validation and data collection.</li>
+      <li><strong>Months 19&ndash;30:</strong> Phase 2 Big Data modelling and GNN development using FIFA datasets.</li>
+      <li><strong>Months 31&ndash;36:</strong> Phase 3 Stakeholder interviews, dashboard prototyping, and thesis submission.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>8. Dissemination of Findings</h2>
+    <p>Findings will be shared through peer-reviewed journals (e.g., British Journal of Sports Medicine) and presentations at international conferences such as the FIFA Quality Programme forums. The project will also produce a technical &ldquo;Risk Dashboard&rdquo; prototype for direct integration into professional club Risk Management Protocols (RMPs)<sup class="cite"><a href="#ref12">[12]</a></sup>.</p>
+  </section>
+
+  <section>
+    <h2>9. Conclusion</h2>
+    <p>This research shifts the FIFA Quality Programme from a focus on hardware durability to one of data-driven clinical utility<sup class="cite"><a href="#ref9">[9]</a></sup>.</p>
+
+    <h3>Key Contributions</h3>
+    <ul>
+      <li><strong>Democratisation:</strong> Smaller member associations can access elite biomechanics through stadium camera systems, removing the need for expensive wearable infrastructure<sup class="cite"><a href="#ref8">[8]</a></sup>.</li>
+      <li><strong>Athlete Wellbeing:</strong> Early detection of biomechanical &ldquo;red flags&rdquo; enables targeted prehabilitation strategies, reducing the risk of catastrophic injuries.</li>
+      <li><strong>Mathematical Risk Modelling:</strong> The study will use XGBSE modelling to estimate the probability of injury \( P(T \le t \mid x) \), enabling dynamic and individualised risk profiling<sup class="cite"><a href="#ref13">[13]</a></sup>.</li>
+    </ul>
+
+    <h3>Final Remarks</h3>
+    <p>This research programme, developed in partnership with FIFA, seeks to modernise injury management by leveraging SAOT infrastructure. By moving beyond &ldquo;black box&rdquo; locomotor data toward a more forensic understanding of &ldquo;kinematic load,&rdquo; this research aims to establish a new global standard for protecting the game&rsquo;s most valuable assets: the players.</p>
+  </section>
+
+  <section>
+    <h2>References</h2>
+    <ol class="refs">
+      <li id="ref1">Saeedeh Abbasi et al. &ldquo;The effect of fatigue on dynamic knee valgus during landing tasks: a systematic review and meta-analysis&rdquo;. In: <em>BMC Sports Science, Medicine and Rehabilitation</em> 17.1 (2025), p. 166.</li>
+      <li id="ref2">Dimitrios Angelidis. &ldquo;Which GPS variables can predict non-contact injuries in soccer players? A systematic review&rdquo;. In: (2020).</li>
+      <li id="ref3">Mostafa Jalili Bafrouei, Seyed Hossein Mirkarimpour, and Mohammadreza Seyedi. &ldquo;The effect of functional fatigue on lower-limb kinematics, balance, and proprioception in individuals with ACL-reconstruction and dynamic knee valgus&rdquo;. In: <em>BMC Musculoskeletal Disorders</em> 26.1 (2025), pp. 1&ndash;8.</li>
+      <li id="ref4">Victoria Catterall, Cise Midoglu, and Stephen Lynch. &ldquo;Time-to-Injury Forecasting in Elite Female Football: A DeepHit Survival Approach&rdquo;. In: <em>arXiv preprint arXiv:2601.19479</em> (2026).</li>
+      <li id="ref5">Adam Chromy, Petr Sopak, and Hynek Cigler. &ldquo;Validated low-cost standardized VICON configuration as a practical approach to estimating the minimal accuracy of a specific setup&rdquo;. In: <em>Scientific Reports</em> 15.1 (2025), p. 23351.</li>
+      <li id="ref6">Da Fang and Changzhou Chen. &ldquo;Sports injury risk prediction based on temporal graph encoding and graph neural networks: A cross-sport transfer learning framework&rdquo;. In: <em>Scientific Reports</em> 15.1 (2025), p. 37656.</li>
+      <li id="ref7">FIFA. <em>Semi-automated offside technology</em>. <a href="https://inside.fifa.com/innovation/world-cup-2022/semi-automated-offside-technology">inside.fifa.com/innovation/world-cup-2022/semi-automated-offside-technology</a>. Accessed: 2026-04-20. 2022.</li>
+      <li id="ref8">FIFA. <em>Technology and Innovation &ndash; FIFA Annual Report 2025</em>. <a href="https://inside.fifa.com/official-documents/annual-report/2025/fifa-club-world-cup-2025/technology-and-innovation">inside.fifa.com/official-documents/annual-report/2025</a>. Accessed: 2026-04-19. 2026.</li>
+      <li id="ref9">FIFA. <em>Testing criteria for semi-automated offside technology systems</em>. Federation Internationale de Football Association (FIFA). 2026. <a href="https://inside.fifa.com/innovation/standards/virtual-offside-lines/saot-testing-criteria">inside.fifa.com/innovation/standards/virtual-offside-lines/saot-testing-criteria</a>. Accessed: 2026-04-19.</li>
+      <li id="ref10">Andreas Fousekis et al. &ldquo;Week-by-Week Predictive Value of External Load Ratios on Injury Risk in Professional Soccer: A Logistic Regression and ROC Curve Analysis Approach&rdquo;. In: <em>Medicina</em> 61.11 (2025), p. 1954.</li>
+      <li id="ref11">Takashi Fukushima et al. &ldquo;Comparison of different pose estimation models for lower-body kinematics: A validation study&rdquo;. In: <em>Scientific Journal of Sport and Performance</em> 5.2 (2026), pp. 253&ndash;268.</li>
+      <li id="ref12">Bahar Hassanmirzaei et al. &ldquo;Applying the principles of risk management in male professional football: a feasibility study, introducing the Aspetar sports injury and illness risk management tool&rdquo;. In: <em>British Journal of Sports Medicine</em> 60.1 (2026), pp. 11&ndash;19.</li>
+      <li id="ref13">Manuel Huth et al. &ldquo;Informed Injury Prediction in Elite Football: Decision Theory meets Machine Learning&rdquo;. In: <em>medRxiv</em> (2025), pp. 2025&ndash;04.</li>
+      <li id="ref14">Soledad Terrazas JM. &ldquo;Semi-Automated Offside Technology in Professional Football: A Critical Case Study on the Necessity of Explainable and Deterministic Artificial Intelligence in High-Stakes Decision Systems&rdquo;. In: (2025).</li>
+      <li id="ref15">KINEXON. <em>What Can Football Coaches Do to Keep Their Players Legs Fresh?</em> <a href="https://kinexon-sports.com/blog/coaches-monitor-mechanical-loading/">kinexon-sports.com/blog/coaches-monitor-mechanical-loading</a>. Accessed: 2026-04-20. 2023.</li>
+      <li id="ref16">Andre Labbe et al. &ldquo;Kinematic sequencing of the football pass using inertial motion analysis&rdquo;. In: <em>International Journal of Sports Physical Therapy</em> 20.8 (2025), p. 1214.</li>
+      <li id="ref17">Zhiyong Liu et al. &ldquo;The effect of muscles fatigue on the knee&rsquo;s kinetics and kinematics characteristics&rdquo;. In: <em>Sustainability</em> 15.4 (2023), p. 3029.</li>
+      <li id="ref18">Sofia Scataglini et al. &ldquo;A systematic review of the accuracy, validity, and reliability of markerless versus marker camera-based 3D motion capture for industrial ergonomic risk analysis&rdquo;. In: <em>Sensors</em> 25.17 (2025), p. 5513.</li>
+      <li id="ref19">Anna U Shields, David L Neumann, and Matthew J Stainer. &ldquo;A qualitative examination of football players&rsquo; acceptability and perceptions on the use of virtual reality in football training&rdquo;. In: <em>PLOS ONE</em> 20.10 (2025), e0334167.</li>
+      <li id="ref20">Jes&uacute;s Manuel Soledad Terrazas. &ldquo;Semi-Automated Offside Technology in Professional Football: A Critical Case Study on the Necessity of Explainable and Deterministic Artificial Intelligence in High-Stakes Decision Systems&rdquo;. In: (2025).</li>
+      <li id="ref21">Emmanuel Vallance et al. &ldquo;Combining internal- and external-training-loads to predict non-contact injuries in soccer&rdquo;. In: <em>Applied Sciences</em> 10.15 (2020), p. 5261.</li>
+      <li id="ref22">Jasper Verheul. <em>The Importance, Challenges, and Developments of Biomechanical Load Measurements in Multidirectional Sports</em>. <a href="https://sciofmultispeed.com/the-importance-challenges-and-developments-of-biomechanical-load-measurements-in-multidirectional-sports/">sciofmultispeed.com</a>. Accessed: 2026-04-20. Oct. 2025.</li>
+      <li id="ref23">Ruizhi Yang et al. &ldquo;Effects of Mental Fatigue on Trunk and Knee Kinetics and Kinematics During Unanticipated Stop-Jump in Amateur Soccer Players&rdquo;. In: <em>Orthopaedic Journal of Sports Medicine</em> 13.5 (2025), p. 23259671251338239.</li>
+    </ol>
+  </section>
+
+  <footer class="page-footer">
+    <a href="index.html">&larr; Back to proposals</a>
+  </footer>
+</div>
+</body>
+</html>

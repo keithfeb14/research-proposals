@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quantifying Tactical Erosion — Research Proposal</title>
+<meta name="description" content="Research proposal: a machine learning approach to predicting the decay of positional integrity and physical efficiency in elite football match-play.">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="page">
+  <a class="back-link" href="index.html">&larr; Back to proposals</a>
+
+  <header class="title-block">
+    <h1>Quantifying Tactical Erosion: A Machine Learning Approach to Predicting the Decay of Positional Integrity and Physical Efficiency in Elite Football Match-Play</h1>
+    <p class="byline">Keith Joseph Fernandes</p>
+    <p class="byline">Research Proposal</p>
+  </header>
+
+  <section>
+    <h2>1. Introduction: The Concept of Contextual Fatigue</h2>
+    <p>In elite Association Football, the quantification of player workload has historically focused on &ldquo;Volume&rdquo; (Total Distance) and &ldquo;Intensity&rdquo; (High-Intensity Sprints). However, these metrics represent isolated physiological outputs rather than performance efficiency.</p>
+    <p>This proposal introduces <strong>Contextual Fatigue</strong>: the mathematical deviation from a player&rsquo;s optimal tactical positioning caused by cumulative physical and cognitive load<sup class="cite"><a href="#ref-spearman2018">[1]</a></sup>. While current sports science can determine if a player is tired, this research will quantify how that fatigue causes structural failure. We define this as &ldquo;Tactical Erosion&rdquo;&mdash;the non-linear decay of a player&rsquo;s ability to maintain the &ldquo;Optimal Positional Windows&rdquo; required by the club&rsquo;s tactical identity<sup class="cite"><a href="#ref-bialkowski2016">[2]</a></sup>. By measuring &ldquo;Positional Slack&rdquo; (the delta between actual and theoretically optimal coordinates), we provide the technical staff with a predictive metric for defensive lapses before they manifest as conceded goals<sup class="cite"><a href="#ref-sumpter2016">[3]</a></sup>.</p>
+  </section>
+
+  <section>
+    <h2>2. Literature Review: Spatiotemporal Dynamics and Machine Learning</h2>
+    <p>The evolution of pitch analysis has transitioned from geometric partitioning (Voronoi Diagrams) to physics-based probability. Spearman&rsquo;s Pitch Control model<sup class="cite"><a href="#ref-spearman2017">[4]</a></sup> defines territory based on the probability of a player reaching a point first, accounting for current velocity, acceleration, and a 0.7s reaction time. While valuable for visualising space, these models often lack the &ldquo;Tactical Fidelity&rdquo; required to evaluate individual adherence to a specific game model.</p>
+    <p>To establish a normative baseline, modern analytics utilises <strong>Ghosting Models</strong>. These multi-agent imitation learning frameworks simulate how a &ldquo;league-average&rdquo; or &ldquo;role-conditioned&rdquo; player would move in a specific context<sup class="cite"><a href="#ref-le2017">[5]</a></sup>. A gap exists in correlating this &ldquo;Positional Slack&rdquo; with External Load data (GPS/IMU). Research shows that high-intensity metrics decrease by &sim;25% between the first and last 9-minute intervals, following non-linear decay curves.</p>
+    <p>Predicting these shifts requires architectures capable of modelling non-Euclidean spatial relationships and multi-agent dependencies. While recurrent models were previously utilised for trajectory prediction, modern frameworks leverage Spatio-Temporal Graph Convolutional Networks (ST-GCNs) to treat the team as a dynamic network of interacting nodes<sup class="cite"><a href="#ref-drexler2024">[6]</a></sup>. ST-GCNs excel at capturing &lsquo;structural&rsquo; fatigue&mdash;where the physiological degradation of a single node (player) necessitates a compensatory shift in the surrounding graph edges (teammates) to maintain defensive compactness. Furthermore, the integration of Multi-Agent Imitation Learning (MAIL) allows for &lsquo;Contextual Ghosting,&rsquo; simulating how a coordinated unit would maintain tactical integrity under varying physiological loads<sup class="cite"><a href="#ref-omidshafiei2022">[7]</a></sup>. This transition from individual-based to network-based modelling is essential for identifying the precise moment a defensive block transitions from a cohesive unit into a series of isolated, high-risk gaps.</p>
+  </section>
+
+  <section>
+    <h2>3. The Three-Study Research Roadmap</h2>
+
+    <h3>3.1 Study 1: Establishing the Tactical Baseline</h3>
+    <p><strong>Objective:</strong> To define the &ldquo;Optimal Positional Windows&rdquo; for the club&rsquo;s tactical identity using historical optical tracking data (25Hz).</p>
+    <p><strong>Methodology:</strong> This study will utilise a covariate-dependent Hidden Markov Model (CDHMM) to infer time-resolved tactical assignments<sup class="cite"><a href="#ref-lopes2015">[8]</a></sup>. By analysing three seasons of tracking data, we will establish role-conditioned &ldquo;Ghosts&rdquo; for the club&rsquo;s primary formations<sup class="cite"><a href="#ref-fujii2020">[9]</a></sup>.</p>
+    <p><strong>Metric:</strong> Tactical Fidelity Score&mdash;a measure of how often a player occupies their role-specific window during high-press triggers (e.g., PPDA &lt; 10.0).</p>
+
+    <h3>3.2 Study 2: Identifying the Physiological &lsquo;Tipping Point&rsquo;</h3>
+    <p><strong>Objective:</strong> To quantify the decay of &ldquo;Network Synchronisation&rdquo; as a function of physical load.</p>
+    <p><strong>Methodology:</strong> The team will be modelled as a dynamic graph where players are nodes and edges represent &ldquo;inter-player distances&rdquo; or &ldquo;passing lane viability.&rdquo; We will utilise an ST-GCN architecture to capture how the spatial relationship between the &ldquo;Back Four&rdquo; and &ldquo;Midfield Three&rdquo; dissolves under high-intensity pressing phases<sup class="cite"><a href="#ref-drexler2024">[6]</a></sup>.</p>
+
+    <h3>3.3 Study 3: The Applied &lsquo;Substitution Logic&rsquo; Tool</h3>
+    <p><strong>Objective:</strong> To develop a real-time risk-assessment dashboard that accounts for multi-agent interactions.</p>
+    <p><strong>Methodology:</strong> Using a Multi-Agent Imitation Learning (MAIL) framework, the model will compare the current &ldquo;Live&rdquo; team state against the &ldquo;Optimal Game Model.&rdquo; The model will calculate a &ldquo;Systemic Risk Score.&rdquo; This score doesn&rsquo;t just trigger when Player A is tired, but when the interaction between tired Player A and tired Player B creates a &ldquo;High-Risk Zone.&rdquo;</p>
+    <p><strong>Output:</strong> A dashboard that visualises &ldquo;Heat-Maps of Instability,&rdquo; allowing coaches to see which combinations of players are failing, rather than just individuals.</p>
+
+    <h3>3.4 Technical Pipeline</h3>
+    <div class="pipeline">
+      <div class="step"><strong>1. Ingestion</strong>Real-time sync: optical (25Hz) + IMU (100Hz)</div>
+      <div class="arrow">&rarr;</div>
+      <div class="step"><strong>2. Contextualization</strong>Spatio-Temporal Graph Construction (ST-GCN)</div>
+      <div class="arrow">&rarr;</div>
+      <div class="step"><strong>3. Feature Engineering</strong>&Delta; calc (actual vs. ghost) &amp; 5-min load</div>
+      <div class="arrow">&rarr;</div>
+      <div class="step"><strong>4. Inference</strong>MAIL inference: systemic risk vs. tactical decay</div>
+      <div class="arrow">&rarr;</div>
+      <div class="step"><strong>5. Alerting</strong>Dashboard: substitution erosion curves</div>
+    </div>
+    <p style="text-align:center; color:var(--muted); font-size:0.85rem;">Figure 1: End-to-end tactical erosion predictive pipeline architecture.</p>
+  </section>
+
+  <section>
+    <h2>References</h2>
+    <ol class="refs">
+      <li id="ref-bialkowski2016">Bialkowski, Alina et al. (Oct. 2016). &ldquo;Discovering Team Structures in Soccer from Spatiotemporal Data&rdquo;. In: <em>IEEE Transactions on Knowledge &amp; Data Engineering</em> 28.10, pp. 2596&ndash;2605. doi: <a href="https://doi.org/10.1109/TKDE.2016.2581158">10.1109/TKDE.2016.2581158</a>.</li>
+      <li id="ref-drexler2024">Drexler, Tim (Sept. 2024). <em>Sports Analytics with Graph Neural Networks and Graph Convolutional Networks</em>. doi: <a href="https://doi.org/10.20944/preprints202410.0046.v1">10.20944/preprints202410.0046.v1</a>.</li>
+      <li id="ref-fujii2020">Fujii, Keisuke et al. (2020). &ldquo;Action valuation of on- and off-ball soccer players based on multi-agent deep reinforcement learning&rdquo;. <a href="https://arxiv.org/html/2305.17886v2">arxiv.org/html/2305.17886v2</a>.</li>
+      <li id="ref-le2017">Le, Hoang et al. (2017). &ldquo;Data-Driven Ghosting using Deep Imitation Learning&rdquo;. In: <em>Sloan Sports Analytics Conference</em>.</li>
+      <li id="ref-lopes2015">Lopes, Ant&oacute;nio et al. (Jan. 2015). &ldquo;Using Voronoi diagrams to describe tactical behaviour in invasive team sports: An application in basketball&rdquo;. In: <em>Cuadernos de Psicologia del Deporte</em> 15, pp. 123&ndash;130. doi: 10.4321/S1578-84232015000100012.</li>
+      <li id="ref-omidshafiei2022">Omidshafiei, Shayegan et al. (May 2022). &ldquo;Multiagent off-screen behavior prediction in football&rdquo;. In: <em>Scientific Reports</em> 12. doi: 10.1038/s41598-022-12547-0.</li>
+      <li id="ref-spearman2017">Spearman, William (2017). &ldquo;Quantifying Pitch Control in Soccer&rdquo;. In: <em>Sloan Sports Analytics Conference</em>.</li>
+      <li id="ref-spearman2018">Spearman, William (2018). &ldquo;Beyond Expected Goals: A Case Study of Data-Driven Game Model for Soccer&rdquo;. In: <em>Sloan Sports Analytics Conference</em>.</li>
+      <li id="ref-sumpter2016">Sumpter, David (2016). <em>Soccermatics: Mathematical Adventures in the Beautiful Game</em>. Bloomsbury Sigma.</li>
+    </ol>
+  </section>
+
+  <footer class="page-footer">
+    <a href="index.html">&larr; Back to proposals</a>
+  </footer>
+</div>
+</body>
+</html>
